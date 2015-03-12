@@ -1,5 +1,5 @@
-Test Verification Box
-=====================
+ChatOps Verification Box
+========================
 
 Requirements
 ------------

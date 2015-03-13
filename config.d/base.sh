@@ -27,3 +27,7 @@ chkconfig jenkins on
 chkconfig --list jenkins
 
 service   jenkins start
+
+su - ${user} -c "bash -ex" <<'EOS'
+  curl -fSkL https://raw.githubusercontent.com/hansode/env-bootstrap/master/build-personal-env.sh | bash
+EOS

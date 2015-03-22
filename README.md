@@ -25,6 +25,8 @@ Connect to the VM.
 $ vagrant ssh
 ```
 
+Access to http://localhost:8079/
+
 References
 ----------
 

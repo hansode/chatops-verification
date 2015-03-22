@@ -11,6 +11,8 @@ set -x
 
 user=${user:-vagrant}
 
+## install packages
+
 su - ${user} -c "bash -ex" <<'EOS'
   addpkgs="
    jenkins.master
@@ -34,11 +36,19 @@ su - ${user} -c "bash -ex" <<'EOS'
   sudo ./run-book.sh ${addpkgs}
 EOS
 
-chkconfig --list jenkins
-chkconfig jenkins on
-chkconfig --list jenkins
+## restart services
 
-service   jenkins start
+svcs="
+ jenkins
+"
+
+for svc in ${svcs}; do
+  chkconfig --list ${svc}
+  chkconfig ${svc} on
+  chkconfig --list ${svc}
+
+  service ${svc} restart
+done
 
 su - ${user} -c "bash -ex" <<'EOS'
   curl -fSkL https://raw.githubusercontent.com/hansode/env-bootstrap/master/build-personal-env.sh | bash

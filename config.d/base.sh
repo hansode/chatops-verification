@@ -16,7 +16,7 @@ user=${user:-vagrant}
 su - ${user} -c "bash -ex" <<'EOS'
   addpkgs="
    hold-releasever.hold-baseurl
-   jenkins.master
+   jenkins.master.core
    hubot.common
   "
 

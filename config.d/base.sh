@@ -12,14 +12,26 @@ set -x
 user=${user:-vagrant}
 
 su - ${user} -c "bash -ex" <<'EOS'
+  addpkgs="
+   jenkins.master
+   hubot.common
+  "
+
+  if [[ -z "$(echo ${addpkgs})" ]]; then
+    exit 0
+  fi
+
   deploy_to=/var/tmp/buildbook-rhel6
 
-  if ! [[ -d ${deploy_to} ]]; then
+  if ! [[ -d "${deploy_to}" ]]; then
     git clone https://github.com/wakameci/buildbook-rhel6.git ${deploy_to}
   fi
+
   cd ${deploy_to}
-  sudo ./run-book.sh jenkins.master
-  sudo ./run-book.sh hubot.common
+  git checkout master
+  git pull
+
+  sudo ./run-book.sh ${addpkgs}
 EOS
 
 chkconfig --list jenkins
